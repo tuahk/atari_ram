@@ -10,10 +10,10 @@ n_inputs = 128
 n_outputs = 7 
 n_cols = 600 
 arity = ARITY
-iterations = 2
+iterations = 200 
 kernels = kernel_set_double(KERNELS)()
 for game in games:
   n_outputs = game[1]
   # for algorithm in algorithms:
   best_ind, highest_reward = learn_atari_ram(game[0], n_inputs, n_outputs, n_cols, arity, kernels, iterations)
-  save_ind(best_ind, 'ind/best_ind')
+  save_ind(best_ind, 'ind/' + game[0])
