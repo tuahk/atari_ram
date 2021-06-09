@@ -123,17 +123,25 @@ if __name__ == "__main__":
   arity = ARITY
   kernels = kernel_set_double(KERNELS)()
   rounds=5
-  iterations=5
-  fname = 'hypoteesi2'
+  iterations=400
+  fname = 'hypoteesi2_1'
   only_active=False
 
   best_ind, highest_reward = learn_atari_ram(game, fname, n_inputs, n_outputs, n_cols, arity, kernels, iterations, rounds, only_active)
 
-  # for i in range(5):
-  #   fname = 'hypoteesi_only_active_' + str(i)
-  #   only_active=True
-  #   best_ind, highest_reward = learn_atari_ram(game, fname, n_inputs, n_outputs, n_cols, arity, kernels, iterations, rounds, only_active)
+  for i in range(5):
+    fname = 'hypoteesi2_rounds5' + str(i)
+    only_active=False
+    rounds=5
+    iterations=2000
+    best_ind, highest_reward = learn_atari_ram(game, fname, n_inputs, n_outputs, n_cols, arity, kernels, iterations, rounds, only_active)
 
+  for i in range(5):
+    fname = 'hypoteesi2_rounds1' + str(i)
+    only_active=False
+    rounds=1
+    iterations=10000
+    best_ind, highest_reward = learn_atari_ram(game, fname, n_inputs, n_outputs, n_cols, arity, kernels, iterations, rounds, only_active)
   # for i in range(5):
   #   fname = 'hypoteesi_all_nodes_' + str(i)
   #   only_active=False
