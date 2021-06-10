@@ -4,7 +4,7 @@ import gym
 # from pyaudi import gdual_double as gdual
 
 
-env = gym.make('Skiing-ram-v0')
+env = gym.make('Bowling-ram-v0')
 for i_episode in range(2):
     observation = env.reset()
     for t in range(10):
@@ -12,6 +12,7 @@ for i_episode in range(2):
         print(observation)
         print(env.action_space)
         action = env.action_space.sample()
+        action = 5
         observation, reward, done, info = env.step(action)
         if done:
             print("Episode finished after {} timesteps".format(t+1))

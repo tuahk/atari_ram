@@ -8,7 +8,7 @@ from typing import Dict, Sequence
 import networkx as nx
 
 # Setup parameters
-KERNELS = ['sum', 'diff', 'mul', 'div']
+KERNELS = ['sum', 'diff', 'mul', 'pdiv', 'sin','cos', 'log', 'exp', 'psqrt', 'sig', 'tanh', 'ReLu']
 ARITY = 2
 SEED = 23
 MUTATION_RATE = 0.05

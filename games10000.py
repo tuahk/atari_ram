@@ -1,4 +1,3 @@
-# coding=utf-8
 from cgp import *
 import gym
 import time
@@ -122,12 +121,30 @@ if __name__ == "__main__":
   n_inputs = 128 
   n_outputs = 7 
   n_cols = 600 
-  arity = ARITY
-  kernels = kernel_set_double(KERNELS)()
-  rounds=5
-  iterations=400
-  fname = 'hypoteesi2_1'
+
+  # arity = ARITY
+  # kernels = kernel_set_double(KERNELS)()
+
+  arity = 2
+  # KERN = ['sum', 'diff', 'mul', 'div'] #, 'sin','cos', 'log', 'exp', 'psqrt', 'sig', 'tanh', 'ReLu']
+  # KERNELS = ['sum', 'diff', 'mul', 'pdiv', 'sin','cos', 'log', 'exp', 'psqrt', 'sig', 'tanh', 'ReLu']
+  KERN = ['sum', 'diff', 'mul', 'pdiv', 'sin','cos', 'log', 'exp', 'psqrt', 'sig', 'tanh', 'ReLu']
+  kernels = kernel_set_double(KERN)()
+
+  rounds=1
+  iterations=3
+  fname = 'basic'
   only_active=False
+
+  # games = [['Assault-ram-v0',7], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14], ['Skiing-ram-v0',3]]
+  games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14]]
+
+  for game in games:
+    n_outputs = game[1]
+    fname = 'simple' 
+    # for algorithm in algorithms:
+    best_ind, highest_reward = learn_atari_ram(game[0], fname, n_inputs, n_outputs, n_cols, arity, kernels, iterations, rounds, only_active)
+    save_ind(best_ind, 'ind/' + game[0])
 
   # best_ind, highest_reward = learn_atari_ram(game, fname, n_inputs, n_outputs, n_cols, arity, kernels, iterations, rounds, only_active)
 
@@ -154,10 +171,10 @@ if __name__ == "__main__":
   # visualize(graph, 'img/' + game + '_' + fname + '.pdf', ind=best_ind)
 
 # Play time!
-  ind = generate_individual(n_inputs, n_outputs, n_cols, arity, kernels)
+  # ind = generate_individual(n_inputs, n_outputs, n_cols, arity, kernels)
   # load_genes(ind, 'ind/Assault-ram-v0_hypoteesi_only_active_0')
-  load_genes(ind, 'ind/all_time_Assault-ram-v0_hypoteesi2_rounds50')
+  # load_genes(ind, 'ind/all_time_Assault-ram-v0_hypoteesi2_rounds50')
 
   # load_genes(ind, 'ind/all_time_Assault-ram-v0_hypoteesi_all_nodes_0')
   # load_genes(ind, 'ind/Assault-ram-v0_hypoteesi_all_nodes_0')
-  play_atari_ram(game, ind)
+  # play_atari_ram(game, ind)
