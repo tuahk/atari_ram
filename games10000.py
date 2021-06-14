@@ -132,7 +132,7 @@ if __name__ == "__main__":
   kernels = kernel_set_double(KERN)()
 
   rounds=1
-  iterations=3
+  iterations=10000
   fname = 'basic'
   only_active=False
 
