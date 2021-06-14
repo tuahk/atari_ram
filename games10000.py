@@ -134,14 +134,14 @@ if __name__ == "__main__":
   rounds=1
   iterations=10000
   fname = 'basic'
-  only_active=False
+  only_active=True
 
   # games = [['Assault-ram-v0',7], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14], ['Skiing-ram-v0',3]]
   games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14]]
 
   for game in games:
     n_outputs = game[1]
-    fname = 'simple' 
+    fname = 'only_active' 
     # for algorithm in algorithms:
     best_ind, highest_reward = learn_atari_ram(game[0], fname, n_inputs, n_outputs, n_cols, arity, kernels, iterations, rounds, only_active)
     save_ind(best_ind, 'ind/' + game[0])
