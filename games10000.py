@@ -131,18 +131,18 @@ if __name__ == "__main__":
   KERN = ['sum', 'diff', 'mul', 'pdiv', 'sin','cos', 'log', 'exp', 'psqrt', 'sig', 'tanh', 'ReLu']
   kernels = kernel_set_double(KERN)()
 
-  rounds=1
-  iterations=10000
-  fname = 'basic'
-  only_active=True
+  rounds=5
+  iterations=2000
+  fname = '5_times'
+  only_active=False
 
   # games = [['Assault-ram-v0',7], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14], ['Skiing-ram-v0',3]]
   games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14]]
 
   for game in games:
     n_outputs = game[1]
-    fname = 'only_active' 
-    # for algorithm in algorithms:
+    fname = '5_rounds'
+      # for algorithm in algorithms:
     best_ind, highest_reward = learn_atari_ram(game[0], fname, n_inputs, n_outputs, n_cols, arity, kernels, iterations, rounds, only_active)
     save_ind(best_ind, 'ind/' + game[0])
 
