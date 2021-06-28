@@ -60,11 +60,12 @@ def learn_atari_ram(game, fname, n_inputs, n_outputs, n_cols, arity, kernels, it
     print(averages)
     best_index = averages.index(max(averages[1:]), 1)  
     print("Paras lapsi i:",best_index)
-    print("Vanhemman suoritus:",averages[0])
+    print("Korkein tulos tähän mennessä", highest_reward)
     # print("Valittaisiin:", "Lapsi" if rewards_list[best_index] >= rewards_list[0] else "Vanhmepi" )
 
     choose_child = False
-    if averages[best_index] >= averages[0]:
+    # Otetaan vain parempi tulos jatkoon + Natural drift koska yhtähyvä kelpaa
+    if averages[best_index] >= highest_reward:
       highest_scoring_ind = pop[best_index]
       best_ind.set(highest_scoring_ind.get())
       print("Valitiin lapsi")
@@ -131,17 +132,19 @@ if __name__ == "__main__":
   KERN = ['sum', 'diff', 'mul', 'pdiv', 'sin','cos', 'log', 'exp', 'psqrt', 'sig', 'tanh', 'ReLu']
   kernels = kernel_set_double(KERN)()
 
-  rounds=5
-  iterations=2000
+  rounds=1
+  iterations=5
   fname = '5_times'
   only_active=False
 
   # games = [['Assault-ram-v0',7], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14], ['Skiing-ram-v0',3]]
-  games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14]]
+
+  # games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14]]
+  games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6]]
 
   for game in games:
     n_outputs = game[1]
-    fname = '5_rounds'
+    fname = 'keep_the_best'
       # for algorithm in algorithms:
     best_ind, highest_reward = learn_atari_ram(game[0], fname, n_inputs, n_outputs, n_cols, arity, kernels, iterations, rounds, only_active)
     save_ind(best_ind, 'ind/' + game[0])
