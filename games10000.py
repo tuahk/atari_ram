@@ -133,14 +133,13 @@ if __name__ == "__main__":
   kernels = kernel_set_double(KERN)()
 
   rounds=1
-  iterations=5
+  iterations=10000
   fname = '5_times'
   only_active=False
 
   # games = [['Assault-ram-v0',7], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14], ['Skiing-ram-v0',3]]
 
-  # games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14]]
-  games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6]]
+  games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14]]
 
   for game in games:
     n_outputs = game[1]
