@@ -12,7 +12,7 @@ def save_history(history, f_name):
 def learn_atari_ram(game, fname, n_inputs, n_outputs, n_cols, arity, kernels, iterations=200, rounds=1, only_active=False):
   start_time = time.time()
   f_name = game + '_' + str(fname)
-  pop = generate_population(n_inputs, n_outputs, n_cols, arity, kernels)
+  pop = generate_population(n_inputs, n_outputs, n_cols, arity, kernels, n=10)
   # Tehdään erillinen olio parhaalle yksilölle jottei python viittuakset sotke kaikkea
 
   best_ind = generate_individual(n_inputs, n_outputs, n_cols, arity, kernels)
@@ -60,12 +60,11 @@ def learn_atari_ram(game, fname, n_inputs, n_outputs, n_cols, arity, kernels, it
     print(averages)
     best_index = averages.index(max(averages[1:]), 1)  
     print("Paras lapsi i:",best_index)
-    print("Korkein tulos tähän mennessä", highest_reward)
+    print("Vanhemman suoritus:",averages[0])
     # print("Valittaisiin:", "Lapsi" if rewards_list[best_index] >= rewards_list[0] else "Vanhmepi" )
 
     choose_child = False
-    # Otetaan vain parempi tulos jatkoon + Natural drift koska yhtähyvä kelpaa
-    if averages[best_index] >= highest_reward:
+    if averages[best_index] >= averages[0]:
       highest_scoring_ind = pop[best_index]
       best_ind.set(highest_scoring_ind.get())
       print("Valitiin lapsi")
@@ -133,18 +132,17 @@ if __name__ == "__main__":
   kernels = kernel_set_double(KERN)()
 
   rounds=1
-  iterations=10000
-  fname = '5_times'
-  only_active=False
+  iterations=5000
+  fname = 'lambda_9'
+  only_active=True
 
   # games = [['Assault-ram-v0',7], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14], ['Skiing-ram-v0',3]]
-
   games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14]]
 
   for game in games:
     n_outputs = game[1]
-    fname = 'keep_the_best'
-      # for algorithm in algorithms:
+    fname = 'lambda_9' 
+    # for algorithm in algorithms:
     best_ind, highest_reward = learn_atari_ram(game[0], fname, n_inputs, n_outputs, n_cols, arity, kernels, iterations, rounds, only_active)
     save_ind(best_ind, 'ind/' + game[0])
 
