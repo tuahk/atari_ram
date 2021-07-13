@@ -134,7 +134,7 @@ if __name__ == "__main__":
   rounds=1
   iterations=5000
   fname = 'lambda_9'
-  only_active=True
+  only_active=False
 
   # games = [['Assault-ram-v0',7], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14], ['Skiing-ram-v0',3]]
   games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14]]
