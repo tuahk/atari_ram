@@ -1,13 +1,13 @@
 from cgp import *
 import gym
 import time
-from statistics import mean
+from statistics import mean, median
 # from atari_ram import play_atari_ram
 
 def play_atari_ram(game, ind):
   env = gym.make(game)
   reward_list = []
-  for i_episode in range(10):
+  for i_episode in range(20):
     observation = env.reset()
     done = False
     rewards = 0
@@ -23,6 +23,7 @@ def play_atari_ram(game, ind):
         reward_list.append(rewards)
         break
   print(mean(reward_list),'&', max(reward_list), '&' ,min(reward_list))
+  # print(median(reward_list))
   print('\n-----------------\n')
   env.close()
 
@@ -33,8 +34,9 @@ arity = 2
 KERN = ['sum', 'diff', 'mul', 'pdiv', 'sin','cos', 'log', 'exp', 'psqrt', 'sig', 'tanh', 'ReLu']
 kernels = kernel_set_double(KERN)()
 
-games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14]]
-ends = ['_simple', '_only_active', '_5_rounds']
+# games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14]]
+games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['KungFuMaster-ram-v0', 14]]
+ends = ['_simple', '_only_active', '_5_rounds', '_keep_the_best', '_lambda_9']
 
 for game_tuple in games:
   for end in ends:

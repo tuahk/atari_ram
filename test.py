@@ -4,17 +4,14 @@ import gym
 # from pyaudi import gdual_double as gdual
 
 
-env = gym.make('Bowling-ram-v0')
-for i_episode in range(2):
-    observation = env.reset()
-    for t in range(10):
-        env.render()
-        print(observation)
-        print(env.action_space)
-        action = env.action_space.sample()
-        action = 5
-        observation, reward, done, info = env.step(action)
-        if done:
-            print("Episode finished after {} timesteps".format(t+1))
-            break
-env.close()
+
+games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14]]
+# games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['KungFuMaster-ram-v0', 14]]
+
+for game_tuple in games:
+    game = game_tuple[0]
+    env = gym.make(game)
+    print('Game:',  game)
+    print(env.unwrapped.get_action_meanings())
+    print('------------------\n\n')
+    env.close()

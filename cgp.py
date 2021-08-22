@@ -226,18 +226,22 @@ def visualize(g: nx.MultiDiGraph, to_file: str, ind, input_names: Sequence = Non
     layout = 'dot'
     # label each function node with an operator
     if operator_map is None:
-        operator_map = {'sum': '+',
+        operator_map = {
+                        'sum': '+',
                         'diff': '-',
-                        'div': '/',
+                        'pdiv': '/',
                         'mul': '*',
-                        operator.add.__name__: '+',
-                        operator.neg.__name__: '-',
-                        operator.mul.__name__: '*',
-                        "protected_div": '/',
+                        # operator.add.__name__: '+',
+                        # operator.neg.__name__: '-',
+                        # operator.mul.__name__: '*',
                         'sin': 'sin',
                         'cos': 'cos',
-                        'min': 'min',
-                        'max': 'max',
+                        'log': 'log',
+                        'exp': 'exp',
+                        'psqrt': u"\u221a",
+                        'sig': 'sig',
+                        'tanh': 'tanh',
+                        'ReLu': 'relu',
                         }
     print('---------------\n')
     for n in g.nodes:
@@ -248,18 +252,20 @@ def visualize(g: nx.MultiDiGraph, to_file: str, ind, input_names: Sequence = Non
         if n >= ind.get_n() + ind.get_cols():  # output node
             print('osui ja n oli', n)
             attr['color'] = 'red'
-            attr['label'] = 'o_' + str(n)
+            attr['label'] = 'O_' + str(n - (ind.get_n() + ind.get_cols()))
         elif n >= ind.get_n():  # function node
-            if attr['func'] not in operator_map:
+            print(operator_map)
+            if str(attr['func']) not in operator_map:
+                
                 print(
                     f"Operator notation of '{attr['func']}'' is not available. The node id is shown instead.")
-            attr['label'] = operator_map.get(attr['func'], n)
+            attr['label'] = operator_map.get(str(attr['func']), n)
             # if g.out_degree(n) == 0:  # the unique output node
             #     attr['color'] = 'red'
         else:  # input node
             attr['color'] = 'green'
             attr['label'] = input_names[-n -
-                                        1] if input_names is not None else f'v{-n}'
+                                        1] if input_names is not None else f'I_{n}'
 
     ag: pygraphviz.agraph.AGraph = to_agraph(g)
     ag.layout(layout)

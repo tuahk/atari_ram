@@ -6,7 +6,7 @@ import sys, gym, time
 # python keyboard_agent.py SpaceInvadersNoFrameskip-v4
 #
 
-env = gym.make('LunarLander-v2' if len(sys.argv)<2 else sys.argv[1])
+env = gym.make('Boxing-v0' if len(sys.argv)<2 else sys.argv[1])
 
 if not hasattr(env.action_space, 'n'):
     raise Exception('Keyboard agent only supports discrete action spaces')
