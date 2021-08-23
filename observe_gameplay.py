@@ -21,7 +21,7 @@ def play_atari_ram(game, ind):
       # print("Episode finished with {} points".format(rewards))
       reward_list.append(rewards)
       break
-    time.sleep(.01)
+    time.sleep(.1)
   print(mean(reward_list),'&', max(reward_list), '&' ,min(reward_list))
   # print(median(reward_list))
   print('\n-----------------\n')
@@ -36,7 +36,7 @@ kernels = kernel_set_double(KERN)()
 
 # games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14]]
 # games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['KungFuMaster-ram-v0', 14]]
-games = [['Pong-ram-v0',6]]
+games = [['KungFuMaster-ram-v0',14]]
 ends = [ '_lambda_9']
 
 for game_tuple in games:

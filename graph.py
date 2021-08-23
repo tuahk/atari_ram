@@ -25,11 +25,11 @@ for game_tuple in games:
 
     print('Game:', game, 'Version:', end)
 
-    print('all_time')
-    load_genes(ind, 'ind/all_time_'+game+end)
+    print('last_one')
+    load_genes(ind, 'ind/'+game+end)
 
     graph = extract_computational_subgraph(ind, kernels)
-    visualize(graph, 'img/' + game + '_' + end + '.pdf', ind=ind)
+    visualize(graph, 'img/last_' + game + '_' + end + '.pdf', ind=ind)
 
     # print('last one')
     # load_genes(ind, 'ind/'+game+end)
