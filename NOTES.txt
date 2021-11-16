@@ -1,8 +1,0 @@
-- Nyt on kahteen väitteeseen törmätty. Eli natural drift mahdollistaisi paremman etsinnän ja toisaalta 
-dcgp:n yhdteydeesä mainittiin että mutaatioiden tulisi keskittyä vain aktiivisiin alkioihin. Tätä kysymystä voisi testata jossain
-yksinkertaisessa ongelmassa dgcp-kirjaston avulla seuraavasti:
-    1. Keskittää muutokset vain aktiivisiin ja valitsee aina parhaan yksilön tai aiemman vanhemman jos ei parempaa
-    2. Muutokset kaikkiin ja valitsee aina parhaan yksilön tai vanhemma jos ei parempaa
-
-    3. Keskittää muutokset vain aktiivisiin ja valitsee aina parhaan yksilön tai uuden jos yht'ä hyvä (natural drift) 
-    2. Muutokset kaikkiin ja valitsee aina parhaan yksilön tai uuden jos yhtä hyvä (natural drift) 

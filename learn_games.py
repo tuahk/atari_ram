@@ -12,8 +12,9 @@ def save_history(history, f_name):
 def learn_atari_ram(game, fname, n_inputs, n_outputs, n_cols, arity, kernels, iterations=200, rounds=1, only_active=False):
   start_time = time.time()
   f_name = game + '_' + str(fname)
-  pop = generate_population(n_inputs, n_outputs, n_cols, arity, kernels)
-  # Tehdään erillinen olio parhaalle yksilölle jottei python viittuakset sotke kaikkea.
+  pop = generate_population(n_inputs, n_outputs, n_cols, arity, kernels, n=10)
+  # Tehdään erillinen olio parhaalle yksilölle jottei python viittuakset sotke kaikkea
+
   best_ind = generate_individual(n_inputs, n_outputs, n_cols, arity, kernels)
   best_ind.set(pop[0].get())
 
@@ -50,17 +51,13 @@ def learn_atari_ram(game, fname, n_inputs, n_outputs, n_cols, arity, kernels, it
               highest_reward = rewards
               all_time_best_ind.set(ind.get())
 
-            # print("Episode finished with {} total score.".format(rewards))
             break
     
     averages = [mean(l) for l in rewards_list]
     # # Hypätään ekan indeksin yli, koska halutaan löytää paras lapsi
-    print(rewards_list)
-    print(averages)
     best_index = averages.index(max(averages[1:]), 1)  
     print("Paras lapsi i:",best_index)
     print("Vanhemman suoritus:",averages[0])
-    # print("Valittaisiin:", "Lapsi" if rewards_list[best_index] >= rewards_list[0] else "Vanhmepi" )
 
     choose_child = False
     if averages[best_index] >= averages[0]:
@@ -116,34 +113,24 @@ def play_atari_ram(game, ind):
   env.close()
 
 if __name__ == "__main__":
-  game = 'Assault-ram-v0'
   n_inputs = 128 
   n_outputs = 7 
   n_cols = 600 
-  arity = ARITY
-  kernels = kernel_set_double(KERNELS)()
+
+  arity = 2
+  KERN = ['sum', 'diff', 'mul', 'pdiv', 'sin','cos', 'log', 'exp', 'psqrt', 'sig', 'tanh', 'ReLu']
+  kernels = kernel_set_double(KERN)()
+
   rounds=1
-  iterations=2000
-  fname = 'hypoteesi_only_active'
-  only_active=True
+  iterations=5000
+  fname = 'lambda_9'
+  only_active=False
 
-  # for i in range(5):
-  #   fname = 'hypoteesi_only_active_' + str(i)
-  #   only_active=True
-  #   best_ind, highest_reward = learn_atari_ram(game, fname, n_inputs, n_outputs, n_cols, arity, kernels, iterations, rounds, only_active)
+  games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14]]
 
-  # for i in range(5):
-  #   fname = 'hypoteesi_all_nodes_' + str(i)
-  #   only_active=False
-  #   best_ind, highest_reward = learn_atari_ram(game, fname, n_inputs, n_outputs, n_cols, arity, kernels, iterations, rounds, only_active)
+  for game in games:
+    n_outputs = game[1]
+    fname = 'lambda_9' 
+    best_ind, highest_reward = learn_atari_ram(game[0], fname, n_inputs, n_outputs, n_cols, arity, kernels, iterations, rounds, only_active)
+    save_ind(best_ind, 'ind/' + game[0])
 
-  # graph = extract_computational_subgraph(best_ind, KERNELS)
-  # visualize(graph, 'img/' + game + '_' + fname + '.pdf', ind=best_ind)
-
-  ind = generate_individual(n_inputs, n_outputs, n_cols, arity, kernels)
-  # load_genes(ind, 'ind/Assault-ram-v0_hypoteesi_only_active_0')
-  # load_genes(ind, 'ind/all_time_Assault-ram-v0_hypoteesi_only_active_3')
-
-  # load_genes(ind, 'ind/all_time_Assault-ram-v0_hypoteesi_all_nodes_0')
-  load_genes(ind, 'ind/Assault-ram-v0_hypoteesi_all_nodes_0')
-  play_atari_ram(game, ind)

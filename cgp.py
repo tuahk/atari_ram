@@ -27,7 +27,6 @@ def generate_individual(n_inputs, n_outputs, n_cols, arity, kernels):
         # seed = SEED,
     )
 
-
 def generate_population(n_inputs, n_outputs, n_cols, arity, kernels, n=5):
     pop = []
     for i in range(n):
@@ -87,16 +86,6 @@ def draw_ind(ind):
     input_names = ['x'+str(i) for i in range(0, ind.get_n())]
     simp = ind.simplify(input_names)
     print(simp)
-    # graph = extract_computational_subgraph(ind, KERNELS)
-    # visualize(graph, 'img/last_best.pdf', ind=ind)
-    # graph = ind.visualize(input_names, False, False)
-    # print("graph active done")
-    # graph.render('img/best_ind_active')
-    # print("render active done")
-    # graph = ind.visualize(input_names, True, False)
-    # print("graph all done")
-    # graph.render('img/best_ind_all')
-    # print("render all done")
 
 
 if __name__ == "__main__":
@@ -110,7 +99,6 @@ if __name__ == "__main__":
     draw_ind(ind)
 
 
-# This does not currently work
 def extract_computational_subgraph(ind, kernels):
 
     x = ind.get()
@@ -125,35 +113,17 @@ def extract_computational_subgraph(ind, kernels):
     is_active = [False] * (n + r * c)
     for i in range(len(active_nodes)):
         is_active[active_nodes[i]] = True
-    """Extract a computational subgraph of the CGP graph `ind`, which only contains active nodes.
-    Args:
-        ind (cgp.Individual): an individual in CGP  
-    Returns:
-        nx.DiGraph: a acyclic directed graph denoting a computational graph
-    See https://www.deepideas.net/deep-learning-from-scratch-i-computational-graphs/ and 
-    http://www.cs.columbia.edu/~mcollins/ff2.pdf for knowledge of computational graphs.
-    """
-    print(ind.get())
-    # print(len(ind.get()))
-    print(ind.get_active_nodes())
-    print('Aktiivisia:', len(ind.get_active_nodes()))
-    print(ind.get_gene_idx())
-    # print(ind.get_arity())
+
     # in the digraph, each node is identified by its index in `ind.nodes`
     # if node i depends on node j, then there is an edge j->i
     g = nx.MultiDiGraph()  # possibly duplicated edges
     order = 1
     active = ind.get_active_nodes()
-    # for i in range(ind.get_n()):
-    #   g.add_node(i)
     for i in range(ind.get_n(), ind.get_n() + ind.get_cols()):
-    # for i in ind.get_active_nodes():
         i_gene = ind.get_gene_idx()[i]
         f_index = ind.get()[i_gene]
         f = kernels[f_index]
-        print(i)
         if is_active[i]:
-          print("OLI AKTIIVISNEN:", i)
           g.add_node(i, func=f)
           arity = ind.get_arity(i)
           # if i >= ind.get_n():
@@ -167,47 +137,15 @@ def extract_computational_subgraph(ind, kernels):
               order += 1
     for i in range(ind.get_m()):
         n_nodes = ind.get_n() + ind.get_cols()
-        print(n_nodes)
         input_index = ind.get()[-i - 1]
         # # Jos ulostuolo ei ole aktiivinen, niin ei huomioida sitä
         if input_index in ind.get_active_nodes():
           g.add_node(n_nodes+i)
           g.add_edge(input_index, n_nodes+i, order=order)
-          print('active')
-          print('input index:', input_index)
         elif input_index < ind.get_n():
           g.add_node(n_nodes+i)
           g.add_edge(input_index, n_nodes+i, order=order)
-          print('input index:', input_index)
-        print('output:', n_nodes+i, 'input:', input_index)
     return g
-
-    # for i in ind.get_active_nodes():
-    #   i_gene = ind.get_gene_idx()[i]
-    #   f_index = ind.get()[i_gene]
-    #   f = kernels[f_index]
-
-    #   g.add_node(i, func=f)
-    #   if i >= ind.get_n():
-    #     arity = ind.get_arity(i)
-    #   else:
-    #     arity = 0
-    #   for j in range(arity):
-    #     input_index = ind.get()[i_gene+j+1]
-    #     # w = node.weights[j]
-    #     g.add_edge(input_index, i, order=order)
-    #     order += 1
-    # # add output nodes
-    # for i in range(ind.get_m()):
-    #   n_nodes = ind.get_n() + ind.get_cols()
-    #   input_index = ind.get()[n_nodes+i]
-    #   # Jos ulostuolo ei ole aktiivinen, niin ei huomioida sitä
-    #   if input_index in ind.get_active_nodes():
-    #     g.add_node(n_nodes+i)
-    #     g.add_edge(input_index, n_nodes+i, order=order)
-    #     print('active')
-    #   print('output:', n_nodes+i, 'input:', input_index)
-    # return g
 
 
 def visualize(g: nx.MultiDiGraph, to_file: str, ind, input_names: Sequence = None, operator_map: Dict = None):
@@ -247,10 +185,7 @@ def visualize(g: nx.MultiDiGraph, to_file: str, ind, input_names: Sequence = Non
     for n in g.nodes:
         print(n)
         attr = g.nodes[n]
-        print(attr)
-        print('outpust start from:', ind.get_n() + ind.get_cols())
         if n >= ind.get_n() + ind.get_cols():  # output node
-            print('osui ja n oli', n)
             attr['color'] = 'red'
             attr['label'] = 'O_' + str(n - (ind.get_n() + ind.get_cols()))
         elif n >= ind.get_n():  # function node
@@ -260,8 +195,6 @@ def visualize(g: nx.MultiDiGraph, to_file: str, ind, input_names: Sequence = Non
                 print(
                     f"Operator notation of '{attr['func']}'' is not available. The node id is shown instead.")
             attr['label'] = operator_map.get(str(attr['func']), n)
-            # if g.out_degree(n) == 0:  # the unique output node
-            #     attr['color'] = 'red'
         else:  # input node
             attr['color'] = 'green'
             attr['label'] = input_names[-n -
