@@ -3,7 +3,6 @@ import gym
 import time
 from statistics import mean
 
-
 def save_history(history, f_name):
   with open('results/'+f_name, 'a') as f:
     for event in history:
@@ -13,6 +12,7 @@ def learn_atari_ram(game, n_inputs, n_outputs, n_cols, arity, kernels, iteration
   start_time = time.time()
   f_name = game + '_' + str(start_time)
   pop = generate_population(n_inputs, n_outputs, n_cols, arity, kernels)
+
   # Tehdään erillinen olio parhaalle yksilölle jottei python viittuakset sotke kaikkea.
   best_ind = generate_individual(n_inputs, n_outputs, n_cols, arity, kernels)
   best_ind.set(pop[0].get())
@@ -54,7 +54,6 @@ def learn_atari_ram(game, n_inputs, n_outputs, n_cols, arity, kernels, iteration
     
     # averages = [mean(l) for l in rewards_list]
     # # Hypätään ekan indeksin yli, koska halutaan löytää paras lapsi
-
     # Kirjanpitoa
     history.append([i_episode, highest_reward, choose_child])
     if i_episode % 100 == 0:

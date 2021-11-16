@@ -5,7 +5,7 @@ import numpy as np
 
 current_best = []
 all_time_best = []
-with open('results/Assault-ram-v0_1621414442.3691218', 'r') as f:
+with open('results/Assault-ram-v0621414442.3691218', 'r') as f:
   for line in f:
     # remove linebreak which is the last character of the string
     l = line[:-1]

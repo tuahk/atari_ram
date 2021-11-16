@@ -146,6 +146,11 @@ if __name__ == "__main__":
     best_ind, highest_reward = learn_atari_ram(game[0], fname, n_inputs, n_outputs, n_cols, arity, kernels, iterations, rounds, only_active)
     save_ind(best_ind, 'ind/' + game[0])
 
+
+
+
+
+
   # best_ind, highest_reward = learn_atari_ram(game, fname, n_inputs, n_outputs, n_cols, arity, kernels, iterations, rounds, only_active)
 
   # for i in range(5):
@@ -173,8 +178,8 @@ if __name__ == "__main__":
 # Play time!
   # ind = generate_individual(n_inputs, n_outputs, n_cols, arity, kernels)
   # load_genes(ind, 'ind/Assault-ram-v0_hypoteesi_only_active_0')
-  # load_genes(ind, 'ind/all_time_Assault-ram-v0_hypoteesi2_rounds50')
+  # # load_genes(ind, 'ind/all_time_Assault-ram-v0_hypoteesi2_rounds50')
 
-  # load_genes(ind, 'ind/all_time_Assault-ram-v0_hypoteesi_all_nodes_0')
-  # load_genes(ind, 'ind/Assault-ram-v0_hypoteesi_all_nodes_0')
+  # # load_genes(ind, 'ind/all_time_Assault-ram-v0_hypoteesi_all_nodes_0')
+  # # load_genes(ind, 'ind/Assault-ram-v0_hypoteesi_all_nodes_0')
   # play_atari_ram(game, ind)

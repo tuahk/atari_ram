@@ -21,7 +21,7 @@ def play_atari_ram(game, ind):
       # print("Episode finished with {} points".format(rewards))
       reward_list.append(rewards)
       break
-    time.sleep(.1)
+    time.sleep(.02)
   print(mean(reward_list),'&', max(reward_list), '&' ,min(reward_list))
   # print(median(reward_list))
   print('\n-----------------\n')
@@ -36,6 +36,7 @@ kernels = kernel_set_double(KERN)()
 
 # games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['Pong-ram-v0',6], ['KungFuMaster-ram-v0', 14]]
 # games = [['Assault-ram-v0',7], ['Bowling-ram-v0',6], ['Boxing-ram-v0',18], ['KungFuMaster-ram-v0', 14]]
+# games = [['Assault-ram-v0',7]]
 games = [['KungFuMaster-ram-v0',14]]
 ends = [ '_lambda_9']
 
@@ -48,13 +49,13 @@ for game_tuple in games:
 
     print('Game:', game, 'Version:', end)
 
-    # print('all_time')
-    # load_genes(ind, 'ind/all_time_'+game+end)
-    # play_atari_ram(game, ind)
-
-    print('last one')
-    load_genes(ind, 'ind/'+game+end)
+    print('all_time')
+    load_genes(ind, 'ind/all_time_'+game+end)
     play_atari_ram(game, ind)
+
+    # print('last one')
+    # load_genes(ind, 'ind/'+game+end)
+    # play_atari_ram(game, ind)
 
 # Play time!
   # ind = generate_individual(n_inputs, n_outputs, n_cols, arity, kernels)
